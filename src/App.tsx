@@ -19,7 +19,7 @@ const App = () => {
   const [cvc, setCvc] = useState<string>("");
   const [focused, setFocused] = useState<Focused>("");
   const [issuer, setIssuer] = useState<string>("");
-  const [formData, setFormData] = useState(null);
+  const [formData, _] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
