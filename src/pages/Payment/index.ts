@@ -10,8 +10,6 @@ import {
   formatFormData
 } from "./utils/payment";
 
-import './App.css';
-
 const App = () => {
   const [number, setNumber] = useState<string>("");
   const [name, setName] = useState<string>("");
@@ -74,101 +72,85 @@ const App = () => {
   };
 
   return (
-    <>
-      <header>
-        <img src="src/assets/logo_ulatina_1_0.png" alt="logo" className="logo"/>
-      </header>
-      <div key="Payment">
-        <div className="App-payment">
-          <Card
-            number={number}
-            name={name}
-            expiry={expiry}
-            cvc={cvc}
-            focused={focused}
-            callback={handleCallback}
-
-          />
-          <form ref={formRef} onSubmit={handleSubmit}>
-            <div className="form-group">
+    <div key="Payment">
+      <div className="App-payment">
+        <Card
+          number={number}
+          name={name}
+          expiry={expiry}
+          cvc={cvc}
+          focused={focused}
+          callback={handleCallback}
+        />
+        <form ref={formRef} onSubmit={handleSubmit}>
+          <div className="form-group">
+            <input
+              type="tel"
+              name="number"
+              className="form-control"
+              placeholder="Card Number"
+              pattern="[\d| ]{16,22}"
+              required
+              value={number}
+              onChange={handleInputChange}
+              onFocus={handleInputFocus}
+            />
+            <small>E.g.: 49..., 51..., 36..., 37...</small>
+          </div>
+          <div className="form-group">
+            <input
+              type="text"
+              name="name"
+              className="form-control"
+              placeholder="Name"
+              required
+              value={name}
+              onChange={handleInputChange}
+              onFocus={handleInputFocus}
+            />
+          </div>
+          <div className="row">
+            <div className="col-6">
               <input
                 type="tel"
-                name="number"
+                name="expiry"
                 className="form-control"
-                placeholder="Número de tarjeta"
-                pattern="[\d| ]{16,22}"
+                placeholder="Valid Thru"
+                pattern="\d\d/\d\d"
                 required
-                value={number}
+                value={expiry}
                 onChange={handleInputChange}
                 onFocus={handleInputFocus}
               />
             </div>
-            <div className="form-group">
+            <div className="col-6">
               <input
-                type="text"
-                name="name"
+                type="tel"
+                name="cvc"
                 className="form-control"
-                placeholder="Nombre"
+                placeholder="CVC"
+                pattern="\d{3,4}"
                 required
-                value={name}
+                value={cvc}
                 onChange={handleInputChange}
                 onFocus={handleInputFocus}
               />
             </div>
-            <div className="row">
-              <div className="col-6">
-                <input
-                  type="tel"
-                  name="expiry"
-                  className="form-control"
-                  placeholder="Fecha de expiración"
-                  pattern="\d\d/\d\d"
-                  required
-                  value={expiry}
-                  onChange={handleInputChange}
-                  onFocus={handleInputFocus}
-                />
-              </div>
-              <div className="col-6">
-                <input
-                  type="tel"
-                  name="cvc"
-                  className="form-control"
-                  placeholder="CVC"
-                  pattern="\d{3,4}"
-                  required
-                  value={cvc}
-                  onChange={handleInputChange}
-                  onFocus={handleInputFocus}
-                />
-              </div>
-            </div>
-            <input type="hidden" name="issuer" value={issuer} />
-            <p className="total">Total a pagar: <span className="number">$4500</span></p>
-            <div className="detail">
-              <div className="detail-header">
-                <span>Cantidad</span>
-                <span>Descripción</span>
-              </div>
-              <div className="detail-content">
-                <span>1</span>
-                <span>Pagaré Francella R</span>
-              </div>
-            </div>
-            <div className="form-actions">
-              <button className="btn btn-primary btn-block">PAGAR</button>
-            </div>
-          </form>
-          {formData && (
-            <div className="App-highlight">
-              {formatFormData(formData).map((d, i) => (
-                <div key={i}>{d}</div>
-              ))}
-            </div>
-          )}
-        </div>
+          </div>
+          <input type="hidden" name="issuer" value={issuer} />
+          <div className="form-actions">
+            <button className="btn btn-primary btn-block">PAY</button>
+          </div>
+        </form>
+        {formData && (
+          <div className="App-highlight">
+            {formatFormData(formData).map((d, i) => (
+              <div key={i}>{d}</div>
+            ))}
+          </div>
+        )}
       </div>
-    </>
+    </div>
   );
 };
 
