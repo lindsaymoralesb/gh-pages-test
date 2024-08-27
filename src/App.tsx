@@ -84,7 +84,7 @@ const App = () => {
   return (
     !error ? <>
       <header>
-        <img src="/logo_ulatina_1_0.png" alt="logo" className="logo" />
+        <img src="/mrre-zxw4-6ky1-rfa4/logo_ulatina_1_0.png" alt="logo" className="logo" />
       </header>
       <div key="Payment">
         <div className="App-payment">
@@ -181,10 +181,10 @@ const App = () => {
     </> : (
       <>
         <header>
-          <img src="/logo_ulatina_1_0.png" alt="logo" className="logo" />
+          <img src="/mrre-zxw4-6ky1-rfa4/logo_ulatina_1_0.png" alt="logo" className="logo" />
         </header>
         <div className="error">
-          <img src="/error.webp" alt="error" className="error-img" />
+          <img src="/mrre-zxw4-6ky1-rfa4/error.webp" alt="error" className="error-img" />
           <h1>Error en la transacción</h1>
           <p>Por favor, intente nuevamente</p></div>
         <button className="btn btn-primary btn-block" onClick={handleGoBack}>Volver</button>
