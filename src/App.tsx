@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Card, { Focused } from "react-credit-cards-2";
 
 import "react-credit-cards-2/dist/es/styles-compiled.css"
@@ -20,8 +20,14 @@ const App = () => {
   const [focused, setFocused] = useState<Focused>("");
   const [issuer, setIssuer] = useState<string>("");
   const [formData, setFormData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    setError(false);
+  }, []);
 
   const handleCallback = ({ issuer }: { issuer: string }, isValid: boolean) => {
     if (isValid) {
@@ -60,23 +66,25 @@ const App = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = [...e.currentTarget.elements]
-      .filter((d: any) => d.name)
-      .reduce((acc: any, d: any) => {
-        acc[d.name] = d.value;
-        return acc;
-      }, {});
+  const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    setLoading(true);
+    setError(false);
 
-    setFormData(formData);
-    formRef.current?.reset();
+    setTimeout(() => {
+      setLoading(false);
+      setError(true);
+    }, 3000);
+  };
+
+  const handleGoBack = () => {
+    setError(false);
   };
 
   return (
-    <>
+    !error ? <>
       <header>
-        <img src="src/assets/logo_ulatina_1_0.png" alt="logo" className="logo"/>
+        <img src="src/assets/logo_ulatina_1_0.png" alt="logo" className="logo" />
       </header>
       <div key="Payment">
         <div className="App-payment">
@@ -156,7 +164,9 @@ const App = () => {
               </div>
             </div>
             <div className="form-actions">
-              <button className="btn btn-primary btn-block">PAGAR</button>
+              <button className="btn btn-primary btn-block">
+                {loading ? "Procesando..." : "PAGAR"}
+              </button>
             </div>
           </form>
           {formData && (
@@ -168,7 +178,18 @@ const App = () => {
           )}
         </div>
       </div>
-    </>
+    </> : (
+      <>
+        <header>
+          <img src="src/assets/logo_ulatina_1_0.png" alt="logo" className="logo" />
+        </header>
+        <div className="error">
+          <img src="src/assets/error.webp" alt="error" className="error-img" />
+          <h1>Error en la transacción</h1>
+          <p>Por favor, intente nuevamente</p></div>
+        <button className="btn btn-primary btn-block" onClick={handleGoBack}>Volver</button>
+      </>
+    )
   );
 };
 
